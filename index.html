@@ -14,8 +14,9 @@
     box-sizing:border-box;
 }
 
+/* ล็อคหน้าจอพื้นหลังสีดำ */
 body{
-    background: #020205;
+    background: #000;
     overflow:hidden;
     font-family: 'Montserrat', sans-serif;
     color: white;
@@ -24,6 +25,21 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* คอนเทนเนอร์ล็อคสัดส่วน 16:10 */
+.screen-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: calc(100vh * 1.6);
+    max-height: calc(100vw / 1.6);
+    aspect-ratio: 16 / 10;
+    background: #020205;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 /* พื้นหลังดวงดาว */
@@ -194,31 +210,31 @@ body{
 }
 
 #timer-section.fullscreen {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     background: radial-gradient(circle, rgba(19, 34, 63, 0.95) 0%, rgba(2, 2, 5, 0.98) 100%);
     z-index: 1000;
     justify-content: center;
     backdrop-filter: blur(10px);
 }
 
-/* ส่วนแสดงคำถามตอนจับเวลา */
+/* ส่วนแสดงคำถามตอนจับเวลา (ปรับให้เล็กลง) */
 #active-question {
     font-family: 'Montserrat', sans-serif;
-    font-size: 2.2rem;
+    font-size: 1.5rem; /* ปรับเล็กลงจาก 2.2rem */
     font-weight: 300;
     color: #ffffff;
     text-align: center;
-    max-width: 80vw;
+    max-width: 80%; 
     line-height: 1.5;
     opacity: 0;
     transform: translateY(-30px);
     transition: all 0.6s ease;
     position: absolute;
-    top: 15%; /* ดันให้อยู่ด้านบนของจอ */
+    top: 20%; /* ขยับลงมาเล็กน้อยให้สมดุลกับขนาดฟอนต์ที่เล็กลง */
     pointer-events: none;
 }
 
@@ -237,10 +253,11 @@ body{
     transition: font-size 0.5s ease;
 }
 
+/* ขนาดตัวเลขตอนเข้าหน้า Fullscreen (ปรับให้เล็กลง) */
 #timer-section.fullscreen #timer-display {
-    font-size: 30vh; /* ปรับขนาดเล็กลงนิดหน่อยเพื่อหลบคำถาม */
+    font-size: 20vmin; /* ปรับเล็กลงจาก 25vmin */
     text-shadow: 0 0 40px rgba(255,255,255,0.2);
-    margin-top: 5vh;
+    margin-top: 5%;
 }
 
 .timer-red {
@@ -307,38 +324,40 @@ body{
 
 <body>
 
-<div class="intro-stars-layer"></div>
-<div class="stage-light"></div>
+<div class="screen-wrapper">
+    <div class="intro-stars-layer"></div>
+    <div class="stage-light"></div>
 
-<div id="main-scene">
-    <h1 class="main-title">FINAL QUESTION</h1>
-    <div class="turn-indicator" id="turn-indicator">Contestant 1</div>
+    <div id="main-scene">
+        <h1 class="main-title">FINAL QUESTION</h1>
+        <div class="turn-indicator" id="turn-indicator">Contestant 1</div>
 
-    <div class="cards-wrapper" id="cards-wrapper">
-        <div class="card" onclick="flipCard(this, 1)">
-            <div class="card-inner">
-                <div class="card-front"><div class="star-icon">✦ I ✦</div></div>
-                <div class="card-back"><p>คุณคิดเห็นอย่างไรกับการที่บานานีน่าภรรยาของคุณกล้วยออกลูกมาเป็นมะเขือม่วง</p></div>
+        <div class="cards-wrapper" id="cards-wrapper">
+            <div class="card" onclick="flipCard(this, 1)">
+                <div class="card-inner">
+                    <div class="card-front"><div class="star-icon">✦ I ✦</div></div>
+                    <div class="card-back"><p>คุณคิดเห็นอย่างไรกับการที่บานานีน่าภรรยาของคุณกล้วยออกลูกมาเป็นมะเขือม่วง</p></div>
+                </div>
+            </div>
+            <div class="card" onclick="flipCard(this, 2)">
+                <div class="card-inner">
+                    <div class="card-front"><div class="star-icon">✦ II ✦</div></div>
+                    <div class="card-back"><p>ระหว่าง Gemini และ chat gpt คุณมีวิธีการป้องกันตัวเองและครอบครัวจากไวรัสฮันตาอย่างไร</p></div>
+                </div>
+            </div>
+            <div class="card" onclick="flipCard(this, 3)">
+                <div class="card-inner">
+                    <div class="card-front"><div class="star-icon">✦ III ✦</div></div>
+                    <div class="card-back"><p>ในฐานะที่คุณเป็นนักศึกษา DSI มาเป็นเวลา 4 ปี จากประสบการณ์และสิ่งที่ได้เรียนรู้มา คุณคิดเห็นอย่างไรกับการที่คนไทยชอบกลับไปหาคนเก่า</p></div>
+                </div>
             </div>
         </div>
-        <div class="card" onclick="flipCard(this, 2)">
-            <div class="card-inner">
-                <div class="card-front"><div class="star-icon">✦ II ✦</div></div>
-                <div class="card-back"><p>ระหว่าง Gemini และ chat gpt คุณมีวิธีการป้องกันตัวเองและครอบครัวจากไวรัสฮันตาอย่างไร</p></div>
-            </div>
-        </div>
-        <div class="card" onclick="flipCard(this, 3)">
-            <div class="card-inner">
-                <div class="card-front"><div class="star-icon">✦ III ✦</div></div>
-                <div class="card-back"><p>ในฐานะที่คุณเป็นนักศึกษา DSI มาเป็นเวลา 4 ปี จากประสบการณ์และสิ่งที่ได้เรียนรู้มา คุณคิดเห็นอย่างไรกับการที่คนไทยชอบกลับไปหาคนเก่า</p></div>
-            </div>
-        </div>
-    </div>
 
-    <div id="timer-section">
-        <div id="active-question"></div>
-        <div id="timer-display">30</div>
-        <button id="timer-btn" class="glam-btn" onclick="startTimer()">Start Timer</button>
+        <div id="timer-section">
+            <div id="active-question"></div>
+            <div id="timer-display">30</div>
+            <button id="timer-btn" class="glam-btn" onclick="startTimer()">Start Timer</button>
+        </div>
     </div>
 </div>
 
@@ -438,7 +457,7 @@ const turnIndicator = document.getElementById('turn-indicator');
 const timerSection = document.getElementById('timer-section');
 const timerDisplay = document.getElementById('timer-display');
 const timerBtn = document.getElementById('timer-btn');
-const activeQuestion = document.getElementById('active-question'); // ตัวแปรสำหรับคำถาม
+const activeQuestion = document.getElementById('active-question'); 
 const allCards = document.querySelectorAll('.card');
 
 function flipCard(cardElement, cardId) {
@@ -449,7 +468,6 @@ function flipCard(cardElement, cardId) {
     cardElement.classList.add('disabled');
     currentCard = cardElement;
 
-    // ดึงข้อความคำถามจากหลังการ์ดมาเตรียมไว้
     const questionText = cardElement.querySelector('.card-back p').innerText;
     activeQuestion.innerText = questionText;
 
@@ -532,7 +550,7 @@ function nextContestant() {
 ======================================================= */
 function createCelebrationStars(){
     const numParticles = 80;
-    const container = document.body;
+    const container = document.querySelector('.screen-wrapper');
 
     for(let i=0;i<numParticles;i++){
         const star = document.createElement('div');
